@@ -1,0 +1,188 @@
+@skeleton-bg-dark: rgba(0,0,0,.12);
+@skeleton-bg-light: rgba(255, 255, 255, 0.05);
+
+@skeleton-border-dark: rgba(0,0,0,.7);
+@skeleton-border-mid: rgba(0,0,0,.05);
+@skeleton-border-light: rgba(255,255,255,.25);
+
+@skeleton-anim-blink-light: rgba(255,255,255,.7);
+@skeleton-anim-blink-dark: rgba(255,255,255,.2);
+
+@skeleton-gradient-wave-light: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.5), rgba(255,255,255,0));
+@skeleton-gradient-wave-dark: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.1), rgba(255,255,255,0));
+
+
+:host {
+  display: block;
+}
+
+.skeleton {
+  --skeleton-speed: 1500ms;
+  background: @skeleton-bg-dark;
+  border-radius: 4px;
+
+  &--anim {
+    cursor: wait;
+  }
+  box-sizing: border-box;
+
+  &:before {
+    content: '\00a0';
+  }
+  &--type {
+    &-text {
+      transform: scale(1, .5);
+    }
+    &-circle,
+    &-avatar {
+      height: 48px;
+      width: 48px;
+      border-radius: 50%;
+    }
+    &-btn {
+      width: 90px;
+      height: 36px;
+    }
+    &-badge {
+      width: 70px;
+      height: 16px;
+    }
+    &-chip {
+      width: 90px;
+      height: 28px;
+      border-radius: 16px;
+    }
+    &-toolbar {
+      height: 50px;
+    }
+    &-checkbox,
+    &-radio {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+    &-toggle {
+      width: 56px;
+      height: 40px;
+      border-radius: 7px;
+    }
+    &-slider,
+    &-range {
+      height: 40px;
+    }
+    &-input {
+      height: 56px;
+    }
+  }
+  &--bordered {
+    border: 1px solid @skeleton-border-mid;
+  }
+  &--square {
+    border-radius: 0;
+  }
+  &--anim-fade {
+    animation: skeleton--fade var(--skeleton-speed) linear .5s infinite;
+  }
+  &--anim-pulse {
+    animation: skeleton--pulse var(--skeleton-speed) ease-in-out .5s infinite;
+  }
+  &--anim-pulse-x {
+    animation: skeleton--pulse-x var(--skeleton-speed) ease-in-out .5s infinite;
+  }
+  &--anim-pulse-y {
+    animation: skeleton--pulse-y var(--skeleton-speed) ease-in-out .5s infinite;
+  }
+  &--anim-wave,
+  &--anim-blink,
+  &--anim-pop {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 0;
+    }
+  }
+  &--anim-blink:after {
+    background: @skeleton-anim-blink-light;
+    animation: skeleton--fade var(--skeleton-speed) linear .5s infinite;
+  }
+  &--anim-wave:after {
+    background: @skeleton-gradient-wave-light;
+    animation: skeleton--wave var(--skeleton-speed) linear .5s infinite;
+  }
+  &--dark {
+    background: @skeleton-bg-light;
+
+    &.skeleton--bordered {
+      border: 1px solid @skeleton-border-light;
+    }
+    &.skeleton--anim-wave:after {
+      background: @skeleton-gradient-wave-dark;
+    }
+    &.skeleton--anim-blink:after {
+      background: @skeleton-anim-blink-dark;
+    }
+  }
+}
+@keyframes skeleton--fade {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes skeleton--pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(.85);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes skeleton--pulse-x {
+  0% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(.75);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes skeleton--pulse-y {
+  0% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(.75);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes skeleton--wave {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+};

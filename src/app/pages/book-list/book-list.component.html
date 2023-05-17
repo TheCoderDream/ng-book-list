@@ -1,0 +1,10 @@
+<div class="book-list" *ngIf="!response?.error && !response?.isLoading ">
+  <app-book
+    *ngFor="let book of response?.value?.data; trackBy: trackBy"
+    [book]="book"
+  ></app-book>
+</div>
+
+<div class="book-skeleton-list" *ngIf="response?.isLoading ">
+
+</div>
