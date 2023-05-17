@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {fetchBookCategories, fetchBooks, IFilter, IPaginatedData, IRequest} from "../../mock";
-import {Observable} from "rxjs";
+import {fetchBookById, fetchBookCategories, fetchBooks, IFilter, IPaginatedData, IRequest} from "../../mock";
+import {Observable, tap} from "rxjs";
 import {IBook, IBookCategory} from "../../mock/data/books";
 import {RequestState, requestStates} from "../utils/request-state";
 
@@ -12,6 +12,10 @@ export type IFilterByCategory = Omit<IRequest, 'filter'> & { category?: string};
 export class BookService {
   public getBooks(req?: IRequest): Observable<RequestState<IPaginatedData<IBook>>> {
     return fetchBooks(req).pipe(requestStates())
+  }
+
+  public getBook(id: string): Observable<RequestState<IBook | undefined>>  {
+    return fetchBookById(id).pipe(requestStates());
   }
 
   public getBooksByCategory({ category, page, pageSize}: IFilterByCategory): Observable<RequestState<IPaginatedData<IBook>>>  {
@@ -26,7 +30,7 @@ export class BookService {
     return this.getBooks({ filter, page, pageSize });
   }
 
-  public getCategories(req: IRequest): Observable<RequestState<IPaginatedData<IBookCategory>>> {
-    return fetchBookCategories(req).pipe(requestStates())
+  public getCategories(req?: IRequest): Observable<IPaginatedData<IBookCategory>> {
+    return fetchBookCategories(req);
   }
 }

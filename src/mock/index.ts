@@ -1,7 +1,11 @@
-import {delay, Observable} from 'rxjs';
-import {mockBooks, mockCategories} from './data/books';
+import {delay, map, Observable} from 'rxjs';
+import {IBook, mockBooks, mockCategories} from './data/books';
 
 export const fetchBooks = fetchData(mockBooks, 500);
+
+export const fetchBookById = (id: string) => fetchBooks({pageSize: 999999}).pipe(
+  map((res: IPaginatedData<IBook>) => res.data.find(b => b.id == id))
+);
 
 export const fetchBookCategories = fetchData(mockCategories, 500);
 
@@ -47,6 +51,8 @@ function fetchData<T>(data: T[], delayInMilliseconds = 0) {
         pageSize
       };
 
+      console.log(paginatedData)
+
       // Emit the paginated data
       observer.next(paginatedResult);
       observer.complete();
@@ -54,6 +60,6 @@ function fetchData<T>(data: T[], delayInMilliseconds = 0) {
   }
 }
 
-function filterArrayByProperty(array: any[], property: string, value: unknown) {
-  return array.filter(item => item[property] === value);
+function filterArrayByProperty(array: any[], property: string, value: string) {
+  return array.filter(item => item[property]?.toLowerCase() === value?.toLowerCase());
 }

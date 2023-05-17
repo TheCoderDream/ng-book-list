@@ -1,0 +1,15 @@
+<ng-container *ngIf="book$ | async as res">
+  <button mat-icon-button matTooltip="Go back" routerLink="/book-list">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <ng-container *ngIf="!res?.isLoading && !res?.error">
+    <div class="book-detail">
+      <app-book-detail [book]="res!.value!"></app-book-detail>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="res?.isLoading">
+    <div class="book-detail">
+      <app-skeleton-book-detail ></app-skeleton-book-detail>
+    </div>
+  </ng-container>
+</ng-container>

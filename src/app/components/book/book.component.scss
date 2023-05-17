@@ -8,7 +8,6 @@
 
   & .book {
     &__thumbnail {
-      width: 100%;
       max-width: 1000px;
       margin: 1.5em;
       border-radius: 3px;
@@ -23,19 +22,6 @@
     &__details {
       padding: 8px;
 
-      & > button{
-        margin-top: 1em;
-        border: none;
-        background: #cbb5e2 none;
-        padding: 0.6em 1.5em;
-        font-size: 1em;
-        border-radius: 20px;
-        font-weight: bolder;
-
-        &:hover{
-          color: #a790f2;
-        }
-      }
     }
 
     &__title {

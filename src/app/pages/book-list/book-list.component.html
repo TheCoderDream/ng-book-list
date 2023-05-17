@@ -1,10 +1,33 @@
-<div class="book-list" *ngIf="!response?.error && !response?.isLoading ">
-  <app-book
-    *ngFor="let book of response?.value?.data; trackBy: trackBy"
-    [book]="book"
-  ></app-book>
-</div>
+<ng-container *ngIf="!response?.error && !response?.isLoading">
+  <mat-form-field>
+    <mat-label>Book Category</mat-label>
+    <mat-select [(value)]="selectedCategory" (valueChange)="getBooksList($event)" >
+      <mat-option [value]="null">
+        All
+      </mat-option>
+      <mat-option *ngFor="let category of (bookCategories$ | async)?.data" [value]="category">
+        {{category.category}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="book-list" >
+    <app-book
+      *ngFor="let book of response?.value?.data; trackBy: trackBy"
+      [book]="book"
+    ></app-book>
+  </div>
 
-<div class="book-skeleton-list" *ngIf="response?.isLoading ">
+</ng-container>
 
+<ng-container *ngIf="response?.isLoading ">
+  <app-skeleton width="212px" height="56px"></app-skeleton>
+  <div class="book-list" >
+    <app-skeleton-book *ngFor="let book of skeletonData" />
+  </div>
+</ng-container>
+
+
+
+<div class="book-list" *ngIf="response?.error">
+  {{ response?.error | json }}
 </div>

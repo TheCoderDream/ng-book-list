@@ -5,5 +5,5 @@
   <p class="book__description">
     {{book.description}}
   </p>
-  <button type="submit">See the Book</button>
+  <button mat-raised-button color="primary" [routerLink]="['/book-list', book.id]" >See the Book</button>
 </div>
