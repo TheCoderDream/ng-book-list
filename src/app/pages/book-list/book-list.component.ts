@@ -5,8 +5,7 @@ import {BookComponent} from "../../components/book/book.component";
 import {RequestState} from "../../utils/request-state";
 import {IPaginatedData} from "../../../mock";
 import {IBook} from "../../../mock/data/books";
-import {pipe, Subscription} from "rxjs";
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-book-list',
@@ -16,7 +15,7 @@ import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
   styleUrls: ['./book-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BookListComponent implements OnInit {
+export class BookListComponent implements OnInit, OnDestroy {
   private bookService = inject(BookService);
   private cdr = inject(ChangeDetectorRef);
   private subscription = new Subscription();
@@ -30,19 +29,22 @@ export class BookListComponent implements OnInit {
   }
 
   getBooksList(): void {
-    this.bookService.getBooksByCategory({
+    this.subscription = this.bookService.getBooksByCategory({
       category: this.selectedCategory,
       page: this.page,
       pageSize: this.pageSize,
     })
-      .pipe(takeUntilDestroyed())
       .subscribe(data => {
-        this.response = data;
-        this.cdr.detectChanges();
+      this.response = data;
+      this.cdr.detectChanges();
     })
   }
 
   public trackBy(index: number, book: IBook): string {
     return book.id;
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
