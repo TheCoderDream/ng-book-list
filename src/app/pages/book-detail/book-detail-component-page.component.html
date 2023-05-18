@@ -12,4 +12,9 @@
       <app-skeleton-book-detail ></app-skeleton-book-detail>
     </div>
   </ng-container>
+  <ng-container *ngIf="res?.error">
+    <div class="book-detail">
+      {{res.error | json }}}
+    </div>
+  </ng-container>
 </ng-container>

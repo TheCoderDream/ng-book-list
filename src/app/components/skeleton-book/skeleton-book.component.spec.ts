@@ -1,6 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SkeletonBookComponent } from './skeleton-book.component';
+import {ComponentHarness} from "@angular/cdk/testing";
+
+export class BookComponentHarness extends ComponentHarness {
+  public static hostSelector = 'app-skeleton-book';
+}
 
 describe('SkeletonBookComponent', () => {
   let component: SkeletonBookComponent;

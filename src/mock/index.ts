@@ -14,6 +14,7 @@ export interface IPaginatedData<T> {
   totalPages: number;
   page: number;
   pageSize: number;
+  totalItems: number;
 }
 
 export interface IFilter {
@@ -47,11 +48,10 @@ function fetchData<T>(data: T[], delayInMilliseconds = 0) {
       const paginatedResult: IPaginatedData<T> = {
         data: paginatedData,
         totalPages: totalPages,
+        totalItems,
         page,
         pageSize
       };
-
-      console.log(paginatedData)
 
       // Emit the paginated data
       observer.next(paginatedResult);
